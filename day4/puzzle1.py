@@ -33,7 +33,7 @@ class Passport:
 			return False
 		elif self.ecl not in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']:
 			return False
-		elif ( not self.pid.isnumeric() ) and ( len(self.byr) != 9 ):
+		elif ( not self.pid.isnumeric() ) or ( len(self.pid) != 9 ):
 			return False
 		return True
 
