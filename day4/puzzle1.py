@@ -44,17 +44,24 @@ class Passport:
 			return False
 		if len( self.hcl[ 1: ] ) != 6:
 			return False
-		return self.hcl[ 1: ].isalnum()
+		if not self.hcl[ 1: ].isalnum():
+			return False
+		for i in self.hcl[ 1: ]:
+			if i not in '0123456789abcdef':
+				return False
+		return True
 
 	def checkHeight( self ) -> bool:
-		if ( self.hgt is None ) or not ( ( self.hgt[:-2] ).isnumeric() ):
+		if self.hgt is None:
+			return False
+		if not ( self.hgt[:-2] ).isnumeric():
 			return False
 		height = int( self.hgt[:-2] )
 		if self.hgt.endswith('cm'):
-			if ( height < 150 ) or ( height > 193 ):
+			if ( height <= 150 ) or ( height >= 193 ):
 				return False
 		elif self.hgt.endswith('in'):
-			if ( height < 59 ) or ( height > 76 ):
+			if ( height <= 59 ) or ( height >= 76 ):
 				return False
 		else:
 			return False
@@ -64,7 +71,8 @@ class Passport:
 def checkNumber( num: str, minn: int, maxx: int, lenght: int ) -> bool:
 	if not num.isnumeric():
 		return False
-	if ( int( num ) < minn ) or ( int( num ) > maxx ):
+	nam = int( num )
+	if ( nam <= minn ) or ( nam >= maxx ):
 		return False
 	return len( num ) == lenght
 
