@@ -9,7 +9,7 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "cwd": "${workspaceFolder}/day3"
+      "cwd": "${workspaceFolder}/day4"
     }
   ]
 }
