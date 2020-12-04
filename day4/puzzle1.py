@@ -58,10 +58,10 @@ class Passport:
 			return False
 		height = int( self.hgt[:-2] )
 		if self.hgt.endswith('cm'):
-			if ( height <= 150 ) or ( height >= 193 ):
+			if ( height < 150 ) or ( height > 193 ):
 				return False
 		elif self.hgt.endswith('in'):
-			if ( height <= 59 ) or ( height >= 76 ):
+			if ( height < 59 ) or ( height > 76 ):
 				return False
 		else:
 			return False
@@ -72,7 +72,7 @@ def checkNumber( num: str, minn: int, maxx: int, lenght: int ) -> bool:
 	if not num.isnumeric():
 		return False
 	nam = int( num )
-	if ( nam <= minn ) or ( nam >= maxx ):
+	if ( nam < minn ) or ( nam > maxx ):
 		return False
 	return len( num ) == lenght
 
