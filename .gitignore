@@ -1,1 +1,3 @@
-day*/__pycache__
+**/__pycache__
+**/*.exe
+**/*.pdb
