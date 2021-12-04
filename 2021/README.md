@@ -9,3 +9,6 @@ you can find a table with the list of day-language pairs
 |  0  | Python 3 |
 |  1  | JavaScript |
 |  2  | Java |
+|  3  | Kotlin |
+|  4  | Scala |
+|  5  | Rust |
