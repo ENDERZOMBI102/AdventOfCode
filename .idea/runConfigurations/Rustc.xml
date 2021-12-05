@@ -5,6 +5,7 @@
     <option name="PARENT_ENVS" value="true" />
     <envs>
       <env name="PYTHONUNBUFFERED" value="1" />
+      <env name="RUST_BACKTRACE" value="1" />
     </envs>
     <option name="SDK_HOME" value="C:\Users\Flavia\AppData\Local\Programs\Python\Python310\python.exe" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
