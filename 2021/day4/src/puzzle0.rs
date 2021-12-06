@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::io::{BufRead, BufReader};
 use std::fs::File;
 
@@ -18,6 +19,12 @@ impl Point {
 	}
 }
 
+impl Display for Point {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		f.write_fmt( format_args!( "Point(x={}, y={})", &self.x, &self.y ) )
+	}
+}
+
 struct Line {
 	from: Point,
 	to: Point,
@@ -34,17 +41,33 @@ impl Line {
 	}
 
 	fn draw(&self, canvas: &mut Canvas) -> () {
+		println!("-----");
+		println!( "{} -> {}", &self.from, &self.to);
 		if self.from.x == self.to.x {
 			// y differs
-			for y in self.from.y .. self.to.y + 1{
-				println!( "{}, {}", self.to.x, y );
-				canvas[ y ][ self.to.x ] += 1;
+			if self.from.y < self.to.y {
+				for y in self.from.y .. self.to.y + 1 {
+					println!("{}, {}", self.to.x, y);
+					canvas[y][self.to.x] += 1;
+				}
+			} else {
+				for y in self.to.y .. self.from.y + 1{
+					println!( "{}, {}", self.to.x, y );
+					canvas[ y ][ self.to.x ] += 1;
+				}
 			}
 		} else {
 			// x differs
-			for x in self.from.x .. self.to.x + 1 {
-				println!( "{}, {}", x, self.from.y );
-				canvas[ self.from.y ][ x ] += 1;
+			if self.from.x < self.to.x {
+				for x in self.from.x .. self.to.x + 1 {
+					println!("{}, {}", x, self.from.y);
+					canvas[self.from.y][x] += 1;
+				}
+			} else {
+				for x in self.to.x .. self.from.x + 1 {
+					println!("{}, {}", x, self.from.y);
+					canvas[self.from.y][x] += 1;
+				}
 			}
 		}
 	}
@@ -52,7 +75,7 @@ impl Line {
 
 
 fn main() -> Result< (), std::io::Error >  {
-	let reader = BufReader::new(File::open("./../test").expect("Cannot open file"));
+	let reader = BufReader::new(File::open("./../input").expect("Cannot open file"));
 	let text_lines = reader.lines();
 
 	let mut lines: Vec<Line> = Vec::new();
@@ -98,10 +121,15 @@ fn main() -> Result< (), std::io::Error >  {
 		line.draw( &mut canvas )
 	}
 
+	let mut twos: i64 = 0;
+
 	// print canvas
 	for row in canvas {
 		for int in row {
 			if int > 0 {
+				if int >= 2 {
+					twos += 1
+				}
 				print!( " {} ", int )
 			} else {
 				print!( " . " )
@@ -109,6 +137,8 @@ fn main() -> Result< (), std::io::Error >  {
 		}
 		print!("\n")
 	}
+
+	println!( "Twos: {}", twos );
 
 	Ok( () )
 
