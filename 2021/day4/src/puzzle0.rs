@@ -6,8 +6,8 @@ type Canvas = Vec< Vec< i64 > >;
 
 
 struct Point {
-	x: i64,
-	y: i64
+	x: usize,
+	y: usize
 }
 
 impl Point {
@@ -33,8 +33,20 @@ impl Line {
 		}
 	}
 
-	fn draw( &self, canvas: &Canvas) -> () {
-
+	fn draw(&self, canvas: &mut Canvas) -> () {
+		if self.from.x == self.to.x {
+			// y differs
+			for y in self.from.y .. self.to.y + 1{
+				println!( "{}, {}", self.to.x, y );
+				canvas[ y ][ self.to.x ] += 1;
+			}
+		} else {
+			// x differs
+			for x in self.from.x .. self.to.x + 1 {
+				println!( "{}, {}", x, self.from.y );
+				canvas[ self.from.y ][ x ] += 1;
+			}
+		}
 	}
 }
 
@@ -47,7 +59,7 @@ fn main() -> Result< (), std::io::Error >  {
 
 	for raw_line in text_lines {
 		let line = Line::new( raw_line.unwrap() );
-		if ! ( line.to.x == line.from.x || line.to.y == line.from.y ) {
+		if line.to.x == line.from.x || line.to.y == line.from.y {
 			lines.push( line )
 		}
 	}
@@ -55,7 +67,7 @@ fn main() -> Result< (), std::io::Error >  {
 	// get canvas dimensions
 	let mut max_y = 0;
 	let mut max_x = 0;
-	for line in lines {
+	for line in &lines {
 		if max_y < line.from.y {
 			max_y = line.from.y
 		}
@@ -73,17 +85,17 @@ fn main() -> Result< (), std::io::Error >  {
 	// create canvas
 	let mut canvas: Canvas = Vec::new();
 
-	for _y in 0 .. max_y {
+	for _y in 0 .. max_y + 1 {
 		let mut vec: Vec<i64> = Vec::new();
-		for _x in 0 .. max_x {
+		for _x in 0 .. max_x + 1 {
 			vec.push(0);
 		}
 		canvas.push( vec )
 	}
 
 	// draw lines
-	for line in lines {
-		line.draw( &canvas )
+	for line in &lines {
+		line.draw( &mut canvas )
 	}
 
 	// print canvas
