@@ -9,10 +9,6 @@ executable = f'{filename[:-3]}.exe'
 if os.path.exists( executable ):
 	os.remove( executable )
 
-os.system(
-	f'rustc {filename} --edition 2021'
-)
+os.system( f'rustc {filename} --edition 2021' )
 if os.path.exists( executable ):
-	os.system(
-		executable
-	)
+	os.system( executable )
