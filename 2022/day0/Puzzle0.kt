@@ -15,5 +15,5 @@ fun main( argv: Array<String> ) {
         } else
             elfs[index] += Integer.valueOf( line )
     }
-    println( elfs.max() )
+    println( elfs.max() ) // 72070
 }

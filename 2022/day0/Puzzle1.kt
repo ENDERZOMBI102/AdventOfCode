@@ -16,7 +16,7 @@ fun main( argv: Array<String> ) {
             elfs[index] += Integer.valueOf( line )
     }
 
-    println( listOf( elfs.removeMax(), elfs.removeMax(), elfs.removeMax() ).sum() )
+    println( listOf( elfs.removeMax(), elfs.removeMax(), elfs.removeMax() ).sum() ) // 211805
 }
 
 fun MutableList<Int>.removeMax(): Int = this.max().also { this@removeMax.remove(it) }
