@@ -2,11 +2,10 @@ package day2
 
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.*
 
 fun main( argv: Array<String> ) {
-	val charsL = "abcdefghijklmnopqrstuvwxyz"
-	val charsU = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	val lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz"
+	val uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 	val score = Files.readAllLines( Path.of( "./2022/day2/input" ) )
 		.chunked(3)
@@ -17,11 +16,11 @@ fun main( argv: Array<String> ) {
 				.filter { it in group[1] && it in group[2] }
 				.sumOf {
 					if ( it.isUpperCase() )
-						charsU.indexOf(it) + 27
+						uppercaseAlphabet.indexOf(it) + 27
 					else
-						charsL.indexOf(it) + 1
+						lowercaseAlphabet.indexOf(it) + 1
 				}
 		}
 
-	println( score ) // 7795
+	println( score ) // 2703
 }
