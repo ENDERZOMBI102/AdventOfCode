@@ -28,30 +28,11 @@ fun main() {
 			subList( numLine + 2, size )
 				.map { line -> line.split(" ").mapNotNull { integer( it ) } }
 				.forEach { ( amount, from, to ) ->
-					printGrid( grid )
-					println( "put $amount from $from into $to" )
-
-					grid[ to - 1 ] += grid[ from - 1 ].run { takeLast( amount ).also { removeAll( it ) }.reversed() }
+					grid[ to - 1 ] += grid[ from - 1 ]
+						.run { takeLast( amount ).also { repeat( it.size ) { removeLast() } } }
+						.reversed()
 				}
 			grid.map { it.lastOrNull() ?: " " }.joinToString( separator = "" )
 		}
-	println( score ) //
-}
-
-fun printGrid( grid: List<List<Char>> ) {
-	println( buildString {
-		val lineLength = grid.size * 4 + 1
-		append( "${" ".repeat( lineLength - 1 )}\n".repeat( grid.maxOf { it.size } + 1 ) )
-		val rowStartCharIndex = { num: Int -> lineLength * num }
-		grid.forEachIndexed { columnIndex, column ->
-			column.forEachIndexed { rowIndex, row ->
-				// charPos will be a position in the string we're building
-				val charPos = columnIndex * 4 + rowStartCharIndex( grid.size - rowIndex ) // for some reason, this is wrong
-				// add the cargo item
-				setRange( charPos, charPos + 3, "[$row]" )
-			}
-			// number list
-			set( columnIndex * 4 + rowStartCharIndex( grid.size - 1 ) + 1, ( columnIndex + 1 ).toString()[0] )
-		}
-	})
+	println( score ) // SHMSDGZVC
 }

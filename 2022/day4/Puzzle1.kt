@@ -4,7 +4,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 fun main() {
-	// TODO: Do this part
 	val score = Files.readAllLines( Path.of( "./2022/day4/input" ) )
 		.run {
 			val numLine = indexOf("") - 1
@@ -25,15 +24,14 @@ fun main() {
 				x++
 			}
 
-			printGrid( grid )
-
 			// pass into lines exec mode
 			subList( numLine + 2, size )
 				.map { line -> line.split(" ").mapNotNull { integer( it ) } }
 				.forEach { ( amount, from, to ) ->
-					grid[ to - 1 ] += grid[ from - 1 ].run { takeLast( amount ).also { removeAll( it ) }.reversed() }
+					grid[ to - 1 ] += grid[ from - 1 ]
+						.run { takeLast( amount ).also { repeat( it.size ) { removeLast() } } }
 				}
 			grid.map { it.lastOrNull() ?: " " }.joinToString( separator = "" )
 		}
-	println( score ) //
+	println( score ) // VRZGHDFBQ
 }
