@@ -24,12 +24,13 @@ fun main() {
 				x++
 			}
 
-			printGrid( grid )
-
 			// pass into lines exec mode
 			subList( numLine + 2, size )
 				.map { line -> line.split(" ").mapNotNull { integer( it ) } }
 				.forEach { ( amount, from, to ) ->
+					printGrid( grid )
+					println( "put $amount from $from into $to" )
+
 					grid[ to - 1 ] += grid[ from - 1 ].run { takeLast( amount ).also { removeAll( it ) }.reversed() }
 				}
 			grid.map { it.lastOrNull() ?: " " }.joinToString( separator = "" )
@@ -44,7 +45,7 @@ fun printGrid( grid: List<List<Char>> ) {
 		val row = { num: Int -> lineLength * num }
 		grid.forEachIndexed { index, column ->
 			column.forEachIndexed { rowIndex, value ->
-				val char = index * 4 + row( grid.size - 2 - rowIndex )
+				val char = index * 4 + row( grid.size - rowIndex )
 				setRange( char, char + 3, "[$value]" )
 			}
 			set( index * 4 + row( grid.size - 1 ) + 1, ( index + 1 ).toString()[0] )
