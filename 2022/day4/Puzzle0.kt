@@ -50,6 +50,7 @@ fun printGrid( grid: List<List<Char>> ) {
 				// add the cargo item
 				setRange( charPos, charPos + 3, "[$row]" )
 			}
+			// number list
 			set( columnIndex * 4 + rowStartCharIndex( grid.size - 1 ) + 1, ( columnIndex + 1 ).toString()[0] )
 		}
 	})
