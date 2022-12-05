@@ -39,17 +39,18 @@ fun main() {
 }
 
 fun printGrid( grid: List<List<Char>> ) {
-	val string = buildString {
+	println( buildString {
 		val lineLength = grid.size * 4 + 1
 		append( "${" ".repeat( lineLength - 1 )}\n".repeat( grid.maxOf { it.size } + 1 ) )
-		val row = { num: Int -> lineLength * num }
-		grid.forEachIndexed { index, column ->
-			column.forEachIndexed { rowIndex, value ->
-				val char = index * 4 + row( grid.size - rowIndex )
-				setRange( char, char + 3, "[$value]" )
+		val rowStartCharIndex = { num: Int -> lineLength * num }
+		grid.forEachIndexed { columnIndex, column ->
+			column.forEachIndexed { rowIndex, row ->
+				// charPos will be a position in the string we're building
+				val charPos = columnIndex * 4 + rowStartCharIndex( grid.size - rowIndex ) // for some reason, this is wrong
+				// add the cargo item
+				setRange( charPos, charPos + 3, "[$row]" )
 			}
-			set( index * 4 + row( grid.size - 1 ) + 1, ( index + 1 ).toString()[0] )
+			set( columnIndex * 4 + rowStartCharIndex( grid.size - 1 ) + 1, ( columnIndex + 1 ).toString()[0] )
 		}
-	}
-	println(string)
+	})
 }
